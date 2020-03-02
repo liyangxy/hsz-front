@@ -5,7 +5,7 @@
                 <a id="navigation_logo_a" href="/">
                     <img src="../assets/logo.png" class="logo"/>
                 </a>
-                <span id="logo_text" class="logo_text">做实验，学编程</span>
+                <span href="javascript:;" id="logo_text" class="logo_text">回收站</span>
             </div>
             <div id="navigation_sign" class="navigation_sign">
               <router-link :to="{ name:'content' }" class="navigation_link">
@@ -13,14 +13,46 @@
               </router-link>
             </div>
             <div class="navigation_login">
-                <a id="contact_us" class="navigation_li">登录</a>
+                <router-link :to="{ name:'login' }" class="navigation_link">
+                  <a href="javascript:;" id="contact_us" class="navigation_li">登录</a>
+                </router-link>
             </div>
             <div class="navigation_register">
-                <a id="contact_us" class="navigation_li">注册</a>
+                <a href="javascript:;" id="contact_us" class="navigation_li">注册</a>
             </div>
         </div>
+        <!-- <div>
+          <Login v-show="show_login"></Login>
+        </div> -->
     </div>
 </template>
+
+<script type="text/javascript">
+// import Login from '@/components/Login.vue';
+
+export default {
+    components: {
+        // Login,
+    },
+
+    data: function () {
+        return {
+            show_login: false
+        }
+    },
+
+    methods: {
+        // change_on_up_state(on_info) {
+        //     console.log(on_info)
+        //     this.show_login = true;
+        // }
+    },
+
+}
+
+
+</script>
+
 
 <style type="text/css" scoped>
 .navigation_bar_header {
@@ -30,7 +62,7 @@
 .navigation_logo_sign {
   display: flex;
   flex-wrap: nowrap;
-  max-width: 1200px;
+  max-width: 960px;
   padding: 10px 10px;
   margin: 0 auto;
 }
@@ -63,9 +95,12 @@
 .navigation_li:hover {
     color: #08bf91;
 }
-.navigation_link {
+.navigation_link, .navigation_li, .navigation_register {
     text-decoration: none;
 }
+/* .logo_text {
+    text-decoration: none;
+} */
 
 
 

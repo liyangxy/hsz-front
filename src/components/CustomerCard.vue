@@ -4,10 +4,45 @@
             <router-link tag="a"
                          class="course_img_a"
                          :to="{ name: 'course', params: {id: data.id} }">
+
+                <div class="card">
+                  <div class="card_one">
+                    <div class="card_first">
+                        <div class="card_title">
+                          <span></span>{{ data.name }}
+                        </div>
+                        <div class="card_desc">
+                          <span>简介：</span>{{ data.description }}
+                        </div>
+                        <div class="card_label">
+                          <span>服务区域：</span>{{ data.status }}
+                        </div>
+                    </div>
+                    <div class="card_two">
+                        <div class="card_name">
+                          {{ data.name }}
+                        </div>
+                        <div class="card_phone">
+                          <span>联系方式：</span>{{ data.students_count }}
+                        </div>
+                        <div class="card_address">
+                          <span>地址：</span>{{ data.html_url }}
+                        </div>
+                    </div>
+                  </div>
+
+                    <!-- <div>
+
+                    </div> -->
+                </div>
+
+
+
+
                 <!-- <div class="course_img_div">
                     <img :src="data.picture_url" class="course_img_img">
                 </div> -->
-                <div class="course_body">
+                <!-- <div class="course_body">
                     <div class="course_description_title_div">
                         {{ data.name }}
                     </div>
@@ -23,7 +58,7 @@
                         :class="course_type_class[data.fee_type]"
                         >{{ course_type_name[data.fee_type] }}</p>
                     </div>
-                </div>
+                </div> -->
             </router-link>
         </div>
     </div>
@@ -31,7 +66,7 @@
 
 <script type="text/javascript">
 export default {
-    name: 'CourseCard',
+    name: 'CustomerCard',
     data () {
         return {
             course_type_class: {
@@ -58,14 +93,56 @@ export default {
 </script>
 
 <style type="text/css" scoped>
+
+
 .course_card_div {
-    min-height: 108px;
+    min-height: 150px;
+    /* border: 1px solid #ededed; */
     box-sizing: border-box;
 }
 
 /**/
 .course_div {
     width: 100%;
+    height: 100%;
+}
+
+.card {
+  display: flex;
+  color: #666;
+}
+.card_one {
+  display: flex;
+  align-items: center;
+}
+.card_first {
+  width: 60%;
+  margin: 10px 40px 10px 20px;
+  /* font-size: 1em; */
+}
+.card_two {
+  width: 40%;
+  margin-right: 5px;
+}
+
+.card_title, .card_desc, .card_label, .card_name, .card_phone, .card_address {
+  margin-bottom: 8px;
+}
+.card_desc{
+  padding: 10px 0;
+}
+.card_phone {
+  color: #fd5f39;
+  padding-top: 10px;
+}
+.card_title {
+  color: #00b38a;
+}
+.card_label {
+  background-color: #fafafa;
+}
+.card_desc, .card_label, .card_phone, .card_address {
+  font-size: 14px;
 }
 
 .course_img_div {
@@ -81,7 +158,8 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
-    box-shadow: 0 1px 2px 0 #ddd;
+    border: 1px solid #ededed;
+    /* box-shadow: 1px 1px 1px 1px #ddd; */
     text-decoration: none;
 }
 
@@ -160,6 +238,18 @@ export default {
 
 .vip_course_p {
     background: #ffae0f;
+}
+@media (max-width: 480px) {
+   .courses_category {
+     font-size: 9px;
+   }
+   .card_first {
+     margin: 10px;
+     /* font-size: 1em; */
+   }
+   .card_desc, .card_label, .card_phone, .card_address {
+     font-size: 7px;
+   }
 }
 
 </style>

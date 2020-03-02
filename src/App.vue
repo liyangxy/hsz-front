@@ -1,12 +1,22 @@
 <template>
     <div id="app">
+        <NavigationBar ></NavigationBar>
         <router-view></router-view>
+        <Footer></Footer>
     </div>
 </template>
 
 <script>
+    import NavigationBar from '@/components/NavigationBar.vue';
+    import Footer from '@/components/Footer.vue';
+
     export default {
         name: 'App',
+        components: {
+            NavigationBar,
+            Footer,
+            // todotips
+        }
     };
 </script>
 
@@ -24,4 +34,16 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
 }
+#app {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+/* @media (max-width: 480px) {
+   .courses_category {
+     font-size: 10px;
+   }
+} */
 </style>

@@ -107,7 +107,7 @@
                 </div>
               </div>
         </div>
-        <div class="courses_div">
+        <!-- <div class="courses_div">
             <CourseCard
                 class="courses_selection_course_card"
                 v-for="(course_info, index) in courses_content['results']"
@@ -116,36 +116,52 @@
             >
 
             </CourseCard>
+        </div> -->
+        <!-- <div class="courses_div">
+            <TempCard
+                class="courses_selection_course_card"
+                v-for="(course_info, index) in courses_content['results']"
+                :key="index"
+                :data="course_info"
+            >
+
+            </TempCard>
+        </div> -->
+        <div class="courses_div">
+            <CustomerCard
+                class="courses_selection_course_card"
+                v-for="(course_info, index) in courses_content['results']"
+                :key="index"
+                :data="course_info"
+            >
+
+            </CustomerCard>
         </div>
-        <!-- <TabPage>
-        </TabPage> -->
+
+        <div>
+          <TabPage
+              :page_info = 'page_info'
+          >
+
+          </TabPage>
+        </div>
+
     </div>
 </template>
 
 <script type="text/javascript">
 // import CourseCard from '@/components/CourseCard.vue';
-import CourseCard from '@/components/CourseCard.vue';
+// import CourseCard from '@/components/CourseCard.vue';
+import CustomerCard from '@/components/CustomerCard.vue';
+import TabPage from '@/components/TabPage.vue';
 
 export default {
     components: {
-        CourseCard
+        CustomerCard,
+        TabPage
     },
     data () {
         return {
-          courses_category1: ['全部', '深圳', '北京', '上海', '广州'],
-          tags_category1: [
-            ["Python","机器学习","Linux","Web","大数据","C","Java","PHP","C++","R","计算机专业课","Spark","NodeJS","Web安全","Hadoop","GO","CSS","网络安全","HTML5","JavaScript","系统安全","网络","Git","jQuery",
-            "安全开发","SQL","Scala","NoSQL","Shell","Flask","OpenCV","渗透测试","HTML","算法","MySQL","ThinkPHP","SDN","Vuejs","加密解密","区块链","云计算","OpenStack","Docker","新手入门","设计模式","Redis",
-            "React","Django","SSM","Kali","Ruby","Laravel","Bootstrap","SSH","Spring","Ansible","ROS","信息隐藏","SHH","信息安全","Swift","汇编","MongoDB","Hbase","Nginx","Kafka","TensorFlow"],
-            ['宝安', '南山', '龙华', '福田', '龙岗', '罗湖', '布吉', '光明', '坪山', '盐田', '大棚新区', '深圳周边'],
-            ["Linux","Shell","网络","Nginx","Ansible","Git"],
-            ["Hadoop","Spark","Scala","Docker","机器学习","SDN","Hbase","Hive","Mahout","Kafka","云计算","大数据","TensorFlow","知识图谱"],
-            ["SQL","NoSQL","MongoDB","MySQL","Redis","Neo4j"],
-            ["Web安全","安全开发","网络安全","Kali","加密解密","系统安全","渗透测试","信息隐藏"],
-            ["HTML5","Web","NodeJS","HTML","JavaScript","jQuery","Bootstrap","React","Vuejs","CSS"],
-            ["新手入门","算法","计算机专业课","设计模式","汇编"],
-            ["Swift","Windows","Electron","Android","R"],
-          ],
           citys: [
                 {
                   'city': '上海',
@@ -3136,6 +3152,13 @@ export default {
                   ]
               }
           ],
+          page_info : {
+            "count":477,
+            "page_size":16,
+            "page":1,
+            "next":"https://www.shiyanlou.com/api/v2/courses/?base_order=%E7%BB%BC%E5%90%88&category=%E5%85%A8%E9%83%A8&category_order=%E5%B7%B2%E4%B8%8A%E7%BA%BF&fee=all&page=2&preview=false&sort=default&tag=%E5%85%A8%E9%83%A8&type_order=%E5%85%A8%E9%83%A8",
+            "previous":null,
+          },
           courses_content: {
               "count":477,
               "page_size":16,
@@ -3144,10 +3167,24 @@ export default {
               "previous":null,
               "results":[
                   {
+                    "id":1,
+                    "name":"南海舟灶螺杆空压机回收公司二手螺杆空压机回收价格",
+                    "picture_url":"https://dn-simplecloud.shiyanlou.com/ncn1.jpg",
+                    "description":"大量回收1-500匹，家用、商用空调、中央空调、价格高于同行、长期回收。酒店酒楼设备高价上门回收、厨房设备高价上门回收。各种旧货上门回收。长清制冷专注于空调、中央空调等维修、回收、安装、调试、平价上门维修。期待您的来电、免费上门估价、欢迎长期合作。",
+                    "students_count":13620831883,
+                    "fee_type":"free",
+                    "price":0,
+                    "real_price":0,
+                    "html_url":"广东省佛山市南海区舟灶金海机械帅哥帅哥帅哥都是个大帅哥",
+                    "api_url":"https://www.shiyanlou.com/api/v2/courses/1/",
+                    "follow_url":"https://www.shiyanlou.com/api/v2/courses/1/follow/",
+                    "status":"天河  白云  番禺  黄埔  增城  从化 "
+                  },
+                  {
                       "id":1,
                       "name":"Linux 基础入门（新版）",
                       "picture_url":"https://dn-simplecloud.shiyanlou.com/ncn1.jpg",
-                      "description":"要在实验楼愉快地学习，先要熟练地使用 Linux，本实验中通过在线动手实验的方式学习 Linux 常用命令，用户与权限管理，目录结构与文件操作，环境变量，计划任务，管道与数据流重定向等基本知识点。",
+                      "description":"要在实验楼愉快地学习，先要熟练地使用 Linux，本实验中通过在线动手实验的方式学习 Linux 常用命令。",
                       "students_count":255460,
                       "fee_type":"free",
                       "price":0,
@@ -3463,7 +3500,7 @@ export default {
 <style type="text/css" scoped>
 .courses_category {
     /* width: 1170px; */
-    max-width: 1200px;
+    max-width: 960px;
     padding: 0 10px;
     margin: 10px auto;
 }
@@ -3622,9 +3659,9 @@ export default {
 }
 
 .courses_selection_course_card {
-    width: 25%;
+    width: 100%;
     margin: 0 0 20px;
-    padding: 0 15px;
+    padding: 0 15px ;
 }
 
 /* 换页区域 */
@@ -3640,7 +3677,7 @@ export default {
     padding: 1px 5px;
     font-size: 15px;
     color: #666;
-    border-radius: 15px;
+    border-radius: 2px;
     cursor: pointer;
     transition: color 1s ease;
     transition: background .5s ease;
@@ -3668,5 +3705,17 @@ export default {
 .order_button:hover, .order_button_selected {
     border: 1px solid #08bf91;
     color: #39cca7;
+}
+
+@media (max-width: 480px) {
+   .selection_button_a {
+     font-size: 10px;
+   }
+   .courses_category_title, .order_button {
+     font-size: 13px;
+   }
+   .tab_page_a {
+     font-size: 10px;
+   }
 }
 </style>
