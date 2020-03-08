@@ -12,14 +12,33 @@
                 <a id="contact_us" class="navigation_li">关于我们</a>
               </router-link>
             </div>
-            <div class="navigation_login">
+            <div class="navigation_login" v-show="!login_state">
                 <router-link :to="{ name:'login' }" class="navigation_link">
-                  <a href="javascript:;" id="contact_us" class="navigation_li">登录</a>
+                  <a href="javascript:;" id="login" class="navigation_li">登录</a>
                 </router-link>
             </div>
-            <div class="navigation_register">
-                <a href="javascript:;" id="contact_us" class="navigation_li">注册</a>
+            <div class="navigation_register" v-show="!login_state">
+                <router-link :to="{ name:'register' }" class="navigation_link">
+                  <a href="javascript:;" id="register" class="navigation_li">注册</a>
+                </router-link>
             </div>
+            <div class="selection_bar" v-show="login_state">
+                <el-dropdown>
+                  <span class="el-dropdown-link">
+                    下拉菜单<i class="el-icon-arrow-down el-icon--right"></i>
+                  </span>
+                  <el-dropdown-menu slot="dropdown">
+                      <router-link :to="{ name:'edit' }" class="navigation_link">
+                          <el-dropdown-item class="dropdown_menu">编辑资料</el-dropdown-item>
+                      </router-link>
+                    <el-dropdown-item class="dropdown_menu">狮子头</el-dropdown-item>
+                    <el-dropdown-item class="dropdown_menu">螺蛳粉</el-dropdown-item>
+                    <el-dropdown-item class="dropdown_menu" disabled>双皮奶</el-dropdown-item>
+                    <el-dropdown-item class="dropdown_menu" divided @click.native="logout()">退出登录</el-dropdown-item>
+                  </el-dropdown-menu>
+                </el-dropdown>
+            </div>
+
         </div>
         <!-- <div>
           <Login v-show="show_login"></Login>
@@ -41,11 +60,36 @@ export default {
         }
     },
 
+    computed : {
+        login_state() {
+            return true;
+            return this.$store.getters.login_state ? true :false;
+        }
+    },
+
     methods: {
-        // change_on_up_state(on_info) {
-        //     console.log(on_info)
-        //     this.show_login = true;
-        // }
+        logout() {
+            console.log('qwqwqw')
+            this.$api.api.loginOut().then((res) => {
+                console.log(res)
+                this.$store.dispatch('login_out');
+                this.$message(
+                    {
+                        message: '退出成功',
+                        type: 'success',
+                        center: true,
+                });
+                console.log('qqqqq')
+                this.$router.push({path: '/'});
+            }).catch((err) => {
+                this.$message({
+                    showClose: true,
+                    message: err.message || '操作失败',
+                    type: 'error'
+                })
+            })
+        },
+
     },
 
 }
@@ -83,10 +127,10 @@ export default {
     margin-bottom: auto;
     /* text-align: center; */
 }
-.navigation_sign, .navigation_login, .navigation_register {
+.navigation_sign, .navigation_login, .navigation_register, .selection_bar {
     align-self: center;
 }
-.navigation_login, .navigation_register {
+.navigation_login, .navigation_register, .selection_bar {
     margin-left: 10px;
 }
 .navigation_li {
@@ -98,11 +142,25 @@ export default {
 .navigation_link, .navigation_li, .navigation_register {
     text-decoration: none;
 }
+
+.el-dropdown-link {
+    cursor: pointer;
+    font-size: 1.1em;
+    /* color: #409EFF; */
+}
+.el-icon-arrow-down {
+    font-size: 1.1em;
+}
+.dropdown_menu {
+    font-size: 1em;
+}
+.dropdown_menu:hover {
+    background-color: transparent;
+    color: #08bf91;
+}
 /* .logo_text {
     text-decoration: none;
 } */
-
-
 
 
 

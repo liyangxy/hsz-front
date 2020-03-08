@@ -1,5 +1,7 @@
+import * as types from './mutation-types';
+
 const mutations = {
-    login: (state, data) => {
+    [types.LOGIN](state, data) {
         state.token = 'Bearer ' + data.token;
         localStorage.setItem("jwt", 'Bearer ' + data.token);
         localStorage.setItem("userInfo", JSON.stringify(data));
@@ -8,10 +10,10 @@ const mutations = {
     //     localStorage.clear();
     //     state.token = null;
     // },
-    token: (state, token) => {
+    [types.TOKEN]: (state, token) => {
         state.token = token;
     },
-    user_name: (state, user_name) => {
+    [types.USER_NAME]: (state, user_name) => {
         state.user_name = user_name;
         localStorage.setItem("user_name", state.user_name);
     }

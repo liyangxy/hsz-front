@@ -53,7 +53,7 @@
             </div>
         </div> -->
         <div class="site_information">
-            <span>©2020 回收网京ICP备1121212122号-2</span>
+            <span>©2020 哈哈网京ICP备232323232号-2</span>
         </div>
     </div>
 </template>

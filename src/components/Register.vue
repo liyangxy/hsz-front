@@ -4,22 +4,6 @@
       @signOnInfo="update_u_p"
       @emit_login="login(loginArgs)"
       ></InputBar> -->
-      <div class="input_bar">
-          <div class="input-group input_group">
-              <input class="form-control text_input"
-                     type="text"
-                     v-model="user"
-                     placeholder="请输入手机号"
-                     >
-          </div>
-          <div class="input-group input_group">
-            <input class="form-control text_input"
-                   type="password"
-                   v-model="password"
-                   placeholder="请输入密码"
-                   >
-          </div>
-      </div>
       <div class="custom_control_div">
           <!-- <div>
               <input type="checkbox" name="autologin" value="true" v-model="checked"
@@ -34,18 +18,31 @@
           </div> -->
       </div>
 
+      <el-input v-model="phone" placeholder="请输入手机号码" class="input_class"></el-input>
+      <!-- <el-form-item label="输入验证码"> -->
+        <div>
+          <el-input v-model="verify_code" placeholder="请输入验证码" class="verify input_class"></el-input>
+          <el-button icon="el-icon-mobile-phone"  @click="send()" class="verify_btn input_class" type="success" :disabled="disabled=!show" >
+              <span v-show="show">获取验证码</span>
+              <span v-show="!show" class="count">{{count}} s</span>
+           </el-button>
+        </div>
+
+      <!-- </el-form-item> -->
+      <el-input v-model="password" placeholder="请输入密码，长度不能小于6位字符" show-password class="input_class"></el-input>
+      <el-input v-model="confirm_password" placeholder="请输入确认密码" show-password class="input_class"></el-input>
+
+
       <div class="login_button">
         <a class="enter_button"
            href="javascript:;"
-           @click="loginBtn"
-        >登录</a>
+           @click="register()"
+        >注册</a>
       </div>
   </div>
 </template>
 
 <script type="text/javascript">
-// import * as types from '../store/mutation-types'
-
 // import InputBar from '@/components/InputBar.vue';
 
 // import SignOn from './sign_on.vue'
@@ -57,18 +54,21 @@ export default {
     name : 'Login',
     data: function () {
         return {
-            user: null,
+            phone: null,
             password: null,
-            // show_login_error_message: false,
-            // checked: '',
-            // update_u_p: '',
-            // input_id: '',
+            confirm_password: null,
+            show: true,
+            count: null,
+            verify_code: null,
+            timer: null,
+            // disabled: null,
         }
     },
     components: {
         // InputBar,
         // SignUp
     },
+
     computed: {
         // ...mapState({
         //     show_login_dialog: state => state.loginState.show_login_dialog,
@@ -93,67 +93,95 @@ export default {
         // }
     },
     methods: {
-        loginBtn(evt) {
-          console.log('loginBtn')
-
-          let errors = null;
-
-          if (!this.user || !this.validPhone(this.user)) {
-              errors = '手机号码不正确';
-          }
-          if (!this.password || this.password.length < 6) {
-              errors = errors ? errors + '，密码长度不能小于6位字符' : '密码长度不能小于6位字符';
-          }
-
-          if (errors) {
-              this.$message.error(errors);
-          } else {
-              let login_info = {
-                  user: this.user,
-                  password: this.password
-              };
-
-              console.log(login_info)
-              this.$api.api.login(login_info).then((res) => {
-                  console.log(res)
-                  this.$store.dispatch('login', res.data);
-                  this.$store.dispatch('user_name', this.user);
-                  this.$message(
-                      {
-                          message: '恭喜你，登录成功',
-                          type: 'success',
-                          center: true,
-                  });
-                  console.log('qqqqq')
-                  this.$router.push({path: '/'});
-              }).catch((err) => {
-                  this.$message({
-                      showClose: true,
-                      message: err.message || '用户名或密码错误，请重输入',
-                      type: 'error'
-                  })
-              })
+        send() {
+            if (!this.timer) {
+                this.count = 60;
+                this.show = false;
+                this.timer = setInterval(() => {
+                 if (this.count > 0 && this.count <= 60) {
+                   this.count--;
+                 } else {
+                   this.show = true;
+                   clearInterval(this.timer);  // 清除定时器
+                   this.timer = null;
+                 }
+               }, 1000)
             }
+        },
+
+        register() {
+            let errors = null;
+
+            if (!this.phone || !this.validPhone(this.phone)) {
+                errors = '手机号码不正确';
+            }
+            if (!this.verify_code || this.verify_code.length != 6) {
+                errors = errors ? errors + '，验证码错误' : '验证码错误';
+            }
+            if (!this.password || this.password.length < 6) {
+                errors = errors ? errors + '，密码长度不能小于6位字符' : '密码长度不能小于6位字符';
+            }
+            if (!this.confirm_password || this.password != this.confirm_password) {
+                errors = errors ? errors + '，确认密码错误' : '确认密码错误';
+            }
+
+            if (errors) {
+                this.$message.error(errors);
+            } else {
+                let register_info = {
+                    phone: this.phone,
+                    verify_code: this.verify_code,
+                    password: this.password,
+                    confirm_password: this.confirm_password
+                };
+
+                console.log(register_info)
+                this.$api.api.register(register_info).then((res) => {
+                    console.log(res)
+                    this.$store.dispatch('login', res.data);
+                    this.$store.dispatch('user_name', this.phone);
+                    this.$message(
+                        {
+                            message: '恭喜你，注册成功',
+                            type: 'success',
+                            center: true,
+                    });
+                    console.log('qqqqq')
+                    this.$router.push({path: '/'});
+                }).catch((err) => {
+                    this.$message({
+                        showClose: true,
+                        message: err.message || '注册失败，请稍后重试',
+                        type: 'error'
+                    })
+                })
+            }
+
+
         },
 
         validPhone(phone) {
             var re = /^1[3456789]\d{9}$/;
             return re.test(phone);
         }
-
-
-        // ...mapActions({
-        //     change_show_state: 'loginState/change_show_state',
-        //     change_on_up_state: 'loginState/change_on_up_state',
-        //     change_user_info: 'loginState/change_user_info',
-        //     change_login_message: 'loginState/change_message',
-        //     change_warning_message: 'warningBar/change_message',
-        //     change_warning_bar_style_class: 'warningBar/change_warning_bar_style_class'
-        // })
     }
 }
 </script>
 <style type="text/css" scoped>
+
+
+.verify {
+    width: 52%;
+    /* padding-right: 0; */
+    /* border-radius: 4px 0 0 4px; */
+}
+.verify_btn {
+    width: 46%;
+}
+.input_class {
+    margin-bottom: 15px;
+}
+
 
 .sign_on_dialog {
     display: flex;
@@ -182,44 +210,13 @@ export default {
 .custom_control_div {
     align-self: center;
 }
-
 .autologin_label {
     margin-right: 10px;
 }
 
-.input_group {
-    display: flex;
-    margin-bottom: 20px;
-    height: 35px;
-    width: 350px;
-}
-
-.input_bar {
-    align-self: center;
-    width: 100%;
-}
-
-.text_input {
-    width: 300px;
-}
-
-.text_input {
-    font-size: 14px;
-}
-
-.text_input::placeholder {
-    color: #c6c6c6;
-}
-
-.text_input:focus {
-    box-shadow: none;
-    /* border-color: #ec0707; */
-}
-
-
 .enter_button {
     display: block;
-    width: 300px;
+    width: 310px;
     color: #fff;
     background: #0c9;
     padding: 6px 12px;

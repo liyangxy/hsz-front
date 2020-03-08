@@ -7,8 +7,10 @@ import store from './store'
 import api from './api'
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import Toasted from 'vue-toasted';
 
 Vue.use(ElementUI);
+Vue.use(Toasted)
 Vue.prototype.$api = api;
 Vue.config.productionTip = false
 /* eslint-disable no-new */
