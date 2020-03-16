@@ -34,13 +34,15 @@ time, mark, audio, video {
 	font-size: 100%;
 	vertical-align: baseline;
 }
-#app {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+html, body {
+    height: 100%;
 }
+#app {
+    position: relative;
+    min-height: 100%;
+    padding-bottom: 100px;
+}
+
 /* @media (max-width: 480px) {
    .courses_category {
      font-size: 10px;

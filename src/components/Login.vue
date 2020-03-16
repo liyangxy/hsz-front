@@ -1,14 +1,10 @@
 <template>
   <div class="sign_on_dialog">
-      <!-- <InputBar
-      @signOnInfo="update_u_p"
-      @emit_login="login(loginArgs)"
-      ></InputBar> -->
       <div class="input_bar">
           <div class="input-group input_group">
               <input class="form-control text_input"
                      type="text"
-                     v-model="user"
+                     v-model="phone"
                      placeholder="请输入手机号"
                      >
           </div>
@@ -21,17 +17,6 @@
           </div>
       </div>
       <div class="custom_control_div">
-          <!-- <div>
-              <input type="checkbox" name="autologin" value="true" v-model="checked"
-                     class="autologinbutton"
-                     :id="input_id ? input_id : 'autologinbutton'">
-              <label class="autologin_label"
-                     :class="[checked ? 'label_checked' : '']"
-                     :for="input_id ? input_id : 'autologinbutton'">下次自动登录</label>
-          </div> -->
-          <!-- <div>
-              <a class="forget_password" target="_blank" href="https://www.shiyanlou.com/users/account/forget-password/">忘记密码</a>
-          </div> -->
       </div>
 
       <div class="login_button">
@@ -57,48 +42,15 @@ export default {
     name : 'Login',
     data: function () {
         return {
-            user: null,
+            phone: null,
             password: null,
-            // show_login_error_message: false,
-            // checked: '',
-            // update_u_p: '',
-            // input_id: '',
         }
-    },
-    components: {
-        // InputBar,
-        // SignUp
-    },
-    computed: {
-        // ...mapState({
-        //     show_login_dialog: state => state.loginState.show_login_dialog,
-        //     on_or_up: state => state.loginState.on_or_up,
-        //     message: state => state.loginState.login_info.message,
-        //     sign_on: state => state.loginState.sign_on
-        // })
-    },
-    watch: {
-        // message: function (newMessage, oldMesssage) {
-        //     if (newMessage) {
-        //         this.change_warning_message(newMessage)
-        //         this.change_login_message('')
-        //         this.change_warning_bar_style_class('alert')
-        //     }
-        // },
-        // sign_on: function (newState, oldState) {
-        //     console.log(newState)
-        //     if (newState === true) {
-        //         this.change_user_info()
-        //     }
-        // }
     },
     methods: {
         loginBtn(evt) {
-          console.log('loginBtn')
-
           let errors = null;
 
-          if (!this.user || !this.validPhone(this.user)) {
+          if (!this.phone || !this.validPhone(this.phone)) {
               errors = '手机号码不正确';
           }
           if (!this.password || this.password.length < 6) {
@@ -109,22 +61,19 @@ export default {
               this.$message.error(errors);
           } else {
               let login_info = {
-                  user: this.user,
+                  phone: this.phone,
                   password: this.password
               };
 
-              console.log(login_info)
               this.$api.api.login(login_info).then((res) => {
-                  console.log(res)
                   this.$store.dispatch('login', res.data);
-                  this.$store.dispatch('user_name', this.user);
+                  this.$store.dispatch('user_name', this.phone);
                   this.$message(
                       {
                           message: '恭喜你，登录成功',
                           type: 'success',
                           center: true,
                   });
-                  console.log('qqqqq')
                   this.$router.push({path: '/'});
               }).catch((err) => {
                   this.$message({
@@ -141,15 +90,6 @@ export default {
             return re.test(phone);
         }
 
-
-        // ...mapActions({
-        //     change_show_state: 'loginState/change_show_state',
-        //     change_on_up_state: 'loginState/change_on_up_state',
-        //     change_user_info: 'loginState/change_user_info',
-        //     change_login_message: 'loginState/change_message',
-        //     change_warning_message: 'warningBar/change_message',
-        //     change_warning_bar_style_class: 'warningBar/change_warning_bar_style_class'
-        // })
     }
 }
 </script>
@@ -300,21 +240,6 @@ export default {
     background-color: #08bf91;
     border-color: #08bf91;
 }
-
-
-/*
-https://stackoverflow.com/questions/10782054/what-does-the-tilde-squiggle-twiddle-css-selector-mean
-for more ~ selector information.
- */
-/* .autologinbutton:active~.autologin_label:before {
-    color: #fff;
-    background-color: #80fadb;
-    border-color: #80fadb;
-} */
-
-/* .autologinbutton:focus~.autologin_label:before {
-    box-shadow: 0 0 0 0.2rem rgba(8,191,145,.25);
-} */
 
 /* */
 .forget_password {

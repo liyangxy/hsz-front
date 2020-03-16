@@ -1,5 +1,5 @@
 <template>
-    <div class="tab_page_div">
+    <div class="tab_page_div" v-show="showPage">
             <a href="javascript:;"
                class="tab_page_a"
                @click="change_current_page(current_page-1)"
@@ -51,6 +51,7 @@ export default {
             previous: null,
             next: null,
             showing_page_info: [],
+            showPage: true,
         }
     },
     props: {
@@ -72,28 +73,45 @@ export default {
     // },
 
     created() {
-        this.init();
+        // console.log(this.page_info)
+        // this.init();
+    },
+
+    watch: {
+        page_info: {
+            handler(newVal, oldVal) {
+                // console.log('watch')
+                // console.log(newVal)
+                this.init();
+            },
+            immediate: true,
+            deep: true,
+        },
     },
 
     methods: {
         init() {
-            console.log(this.page_info)
-            this.current_page = this.page_info.page;
-            this.all_page = Math.ceil(this.page_info.count / this.page_info.page_size);
-            this.previous = this.page_info.previous;
-            this.next = this.page_info.next;
-            console.log(this.all_page)
-            let page_num = [];
-            for (var i = 1; i <= this.all_page; i++) {
-                page_num.push(i)
-                if (i === 2) {
-                    page_num.push('...')
-                } else if (i === this.all_page - 2) {
-                    page_num.push('... ')
+            if (this.page_info.total == 0) {
+                this.showPage = false;
+                console.log(this.page_info)
+            } else {
+                this.showPage = true;
+                this.current_page = this.page_info.current_page;
+                this.all_page = Math.ceil(this.page_info.total / this.page_info.per_page);
+                // this.previous = this.page_info.previous;
+                // this.next = this.page_info.next;
+                // console.log(this.all_page)
+                let page_num = [];
+                for (var i = 1; i <= this.all_page; i++) {
+                    page_num.push(i)
+                    if (i === 2) {
+                        page_num.push('...')
+                    } else if (i === this.all_page - 2) {
+                        page_num.push('... ')
+                    }
                 }
+                this.showing_page_info = page_num;
             }
-            console.log(page_num)
-            this.showing_page_info = page_num;
         },
 
         change_current_page(page) {
@@ -101,6 +119,7 @@ export default {
                 return;
             }
             this.current_page = page;
+            this.$emit('changePage',this.current_page);
             this.$router.push( { path : '/' } ).catch(() =>{});
         },
 

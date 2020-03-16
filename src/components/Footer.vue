@@ -66,8 +66,14 @@ export default {
 
 <style type="text/css" scoped>
 .footer {
+    /* position:absolute; */
     background: #FAFAFA;
     margin-top: 10px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 80px;
 }
 
 /* 网站信息部分，备案等 */

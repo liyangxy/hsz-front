@@ -1,23 +1,5 @@
 <template>
   <div class="sign_on_dialog">
-      <!-- <InputBar
-      @signOnInfo="update_u_p"
-      @emit_login="login(loginArgs)"
-      ></InputBar> -->
-      <div class="custom_control_div">
-          <!-- <div>
-              <input type="checkbox" name="autologin" value="true" v-model="checked"
-                     class="autologinbutton"
-                     :id="input_id ? input_id : 'autologinbutton'">
-              <label class="autologin_label"
-                     :class="[checked ? 'label_checked' : '']"
-                     :for="input_id ? input_id : 'autologinbutton'">下次自动登录</label>
-          </div> -->
-          <!-- <div>
-              <a class="forget_password" target="_blank" href="https://www.shiyanlou.com/users/account/forget-password/">忘记密码</a>
-          </div> -->
-      </div>
-
       <el-input v-model="phone" placeholder="请输入手机号码" class="input_class"></el-input>
       <!-- <el-form-item label="输入验证码"> -->
         <div>
@@ -32,7 +14,6 @@
       <el-input v-model="password" placeholder="请输入密码，长度不能小于6位字符" show-password class="input_class"></el-input>
       <el-input v-model="confirm_password" placeholder="请输入确认密码" show-password class="input_class"></el-input>
 
-
       <div class="login_button">
         <a class="enter_button"
            href="javascript:;"
@@ -43,12 +24,6 @@
 </template>
 
 <script type="text/javascript">
-// import InputBar from '@/components/InputBar.vue';
-
-// import SignOn from './sign_on.vue'
-// import SignUp from './sign_up.vue'
-
-// import {mapState, mapActions} from 'vuex'
 
 export default {
     name : 'Login',
@@ -61,36 +36,17 @@ export default {
             count: null,
             verify_code: null,
             timer: null,
-            // disabled: null,
         }
     },
     components: {
-        // InputBar,
-        // SignUp
+
     },
 
     computed: {
-        // ...mapState({
-        //     show_login_dialog: state => state.loginState.show_login_dialog,
-        //     on_or_up: state => state.loginState.on_or_up,
-        //     message: state => state.loginState.login_info.message,
-        //     sign_on: state => state.loginState.sign_on
-        // })
+
     },
     watch: {
-        // message: function (newMessage, oldMesssage) {
-        //     if (newMessage) {
-        //         this.change_warning_message(newMessage)
-        //         this.change_login_message('')
-        //         this.change_warning_bar_style_class('alert')
-        //     }
-        // },
-        // sign_on: function (newState, oldState) {
-        //     console.log(newState)
-        //     if (newState === true) {
-        //         this.change_user_info()
-        //     }
-        // }
+
     },
     methods: {
         send() {
@@ -135,9 +91,7 @@ export default {
                     confirm_password: this.confirm_password
                 };
 
-                console.log(register_info)
                 this.$api.api.register(register_info).then((res) => {
-                    console.log(res)
                     this.$store.dispatch('login', res.data);
                     this.$store.dispatch('user_name', this.phone);
                     this.$message(
@@ -146,18 +100,15 @@ export default {
                             type: 'success',
                             center: true,
                     });
-                    console.log('qqqqq')
                     this.$router.push({path: '/'});
                 }).catch((err) => {
                     this.$message({
                         showClose: true,
-                        message: err.message || '注册失败，请稍后重试',
+                        message: '注册失败，请稍后重试',
                         type: 'error'
                     })
                 })
             }
-
-
         },
 
         validPhone(phone) {
@@ -297,21 +248,6 @@ export default {
     background-color: #08bf91;
     border-color: #08bf91;
 }
-
-
-/*
-https://stackoverflow.com/questions/10782054/what-does-the-tilde-squiggle-twiddle-css-selector-mean
-for more ~ selector information.
- */
-/* .autologinbutton:active~.autologin_label:before {
-    color: #fff;
-    background-color: #80fadb;
-    border-color: #80fadb;
-} */
-
-/* .autologinbutton:focus~.autologin_label:before {
-    box-shadow: 0 0 0 0.2rem rgba(8,191,145,.25);
-} */
 
 /* */
 .forget_password {

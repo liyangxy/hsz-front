@@ -9,6 +9,7 @@ const store = new Vuex.Store({
             token: null,
             user_name: null,
             login_state: false,
+            user_id: null,
         }
     },
 
@@ -16,6 +17,7 @@ const store = new Vuex.Store({
         user_name: state => state.user_name,
         token: state => state.token,
         login_state: state => state.login_state,
+        user_id: state => state.user_id,
 
     },
 
@@ -29,12 +31,16 @@ const store = new Vuex.Store({
         login_state: (state, status) => {
             state.login_state = status
         },
+        user_id: (state, id) => {
+            state.user_id = id
+        },
     },
 
     actions: {
         login ({commit}, data) {
             commit('token', 'Bearer ' + data.access_token);
             commit('login_state', true);
+            commit('user_id', data.id);
             localStorage.setItem("jwt", 'Bearer ' + data.access_token);
             localStorage.setItem("userInfo", JSON.stringify(data));
         },

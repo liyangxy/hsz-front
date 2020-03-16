@@ -2,10 +2,12 @@
     <div id="navigation_bar" class="navigation_bar_header">
         <div id="navigation_logo_sign" class="navigation_logo_sign">
             <div id="navigation_logo" class="navigation_logo">
-                <a id="navigation_logo_a" href="/">
-                    <img src="../assets/logo.png" class="logo"/>
-                </a>
-                <span href="javascript:;" id="logo_text" class="logo_text">回收站</span>
+                <router-link :to="{ name:'home' }">
+                    <a id="navigation_logo_a" href="javascript:;">
+                        <img src="../assets/logo.png" class="logo"/>
+                    </a>
+                </router-link>
+                    <span href="javascript:;" id="logo_text" class="logo_text">回收站</span>
             </div>
             <div id="navigation_sign" class="navigation_sign">
               <router-link :to="{ name:'content' }" class="navigation_link">
@@ -62,7 +64,7 @@ export default {
 
     computed : {
         login_state() {
-            return true;
+            // return true;
             return this.$store.getters.login_state ? true :false;
         }
     },

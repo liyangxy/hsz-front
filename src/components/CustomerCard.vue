@@ -3,19 +3,19 @@
         <div class="course_div">
             <router-link tag="a"
                          class="course_img_a"
-                         :to="{ name: 'course', params: {id: data.id} }">
+                         :to="{ name: '', params: {id: data.id} }">
 
                 <div class="card">
                   <div class="card_one">
                     <div class="card_first">
                         <div class="card_title">
-                          <span></span>{{ data.name }}
+                          <span></span>{{ data.title }}
                         </div>
                         <div class="card_desc">
-                          <span>简介：</span>{{ data.description }}
+                          <span>简介：</span>{{ data.dec }}
                         </div>
                         <div class="card_label">
-                          <span>服务区域：</span>{{ data.status }}
+                          <span>服务区域：</span>{{ data.address }}
                         </div>
                     </div>
                     <div class="card_two">
@@ -23,21 +23,15 @@
                           {{ data.name }}
                         </div>
                         <div class="card_phone">
-                          <span>联系方式：</span>{{ data.students_count }}
+                          <span>联系方式：</span>{{ data.contact_phone }}
                         </div>
                         <div class="card_address">
-                          <span>地址：</span>{{ data.html_url }}
+                          <span>地址：</span>{{ data.address }}
                         </div>
                     </div>
                   </div>
 
-                    <!-- <div>
-
-                    </div> -->
                 </div>
-
-
-
 
                 <!-- <div class="course_img_div">
                     <img :src="data.picture_url" class="course_img_img">
@@ -69,18 +63,7 @@ export default {
     name: 'CustomerCard',
     data () {
         return {
-            course_type_class: {
-                'free': 'free_course_p',
-                'member': 'vip_course_p',
-                'bootcamp': 'training_course_p',
-                '': ''
-            },
-            course_type_name: {
-                'free': '免费',
-                'member': '会员',
-                'bootcamp': '训练营',
-                '': ''
-            }
+
         }
     },
     props: {
@@ -108,7 +91,7 @@ export default {
 }
 
 .card {
-  display: flex;
+  /* display: flex; */
   color: #666;
 }
 .card_one {
