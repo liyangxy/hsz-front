@@ -53,8 +53,9 @@ axios.defaults.baseURL = process.env.PROTOCOL + "://" + process.env.API_HOST + "
 
 axios.interceptors.request.use(
     config => {
-        if (store.state.token) {
-            config.headers.Authorization = store.state.token;
+        if (localStorage.getItem("jwt")) {
+            // config.headers.Authorization = store.state.token;
+            config.headers.Authorization = localStorage.getItem("jwt");
         }
         return config;
     }, err => {

@@ -18,7 +18,6 @@ const store = new Vuex.Store({
         token: state => state.token,
         login_state: state => state.login_state,
         user_id: state => state.user_id,
-
     },
 
     mutations: {
@@ -29,7 +28,7 @@ const store = new Vuex.Store({
             state.token = token
         },
         login_state: (state, status) => {
-            state.login_state = status
+            state.login_state = status;
         },
         user_id: (state, id) => {
             state.user_id = id
@@ -39,10 +38,11 @@ const store = new Vuex.Store({
     actions: {
         login ({commit}, data) {
             commit('token', 'Bearer ' + data.access_token);
-            commit('login_state', true);
             commit('user_id', data.id);
             localStorage.setItem("jwt", 'Bearer ' + data.access_token);
             localStorage.setItem("userInfo", JSON.stringify(data));
+            localStorage.setItem("login", true);
+            commit('login_state', true);
         },
         user_name ({commit}, user_name) {
             commit('user_name', user_name);

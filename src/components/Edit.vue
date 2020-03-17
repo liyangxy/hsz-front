@@ -226,7 +226,7 @@ export default {
                 message: '发生错误',
                 type: 'error'
             });
-            // this.$router.push({path: '/'});
+            this.$router.push({path: '/'});
         });
 
         this.user_id = this.$store.getters.user_id;

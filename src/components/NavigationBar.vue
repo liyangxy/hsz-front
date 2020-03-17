@@ -33,9 +33,9 @@
                       <router-link :to="{ name:'edit' }" class="navigation_link">
                           <el-dropdown-item class="dropdown_menu">编辑资料</el-dropdown-item>
                       </router-link>
-                    <el-dropdown-item class="dropdown_menu">狮子头</el-dropdown-item>
+                    <!-- <el-dropdown-item class="dropdown_menu">狮子头</el-dropdown-item>
                     <el-dropdown-item class="dropdown_menu">螺蛳粉</el-dropdown-item>
-                    <el-dropdown-item class="dropdown_menu" disabled>双皮奶</el-dropdown-item>
+                    <el-dropdown-item class="dropdown_menu" disabled>双皮奶</el-dropdown-item> -->
                     <el-dropdown-item class="dropdown_menu" divided @click.native="logout()">退出登录</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
@@ -49,25 +49,25 @@
 </template>
 
 <script type="text/javascript">
-// import Login from '@/components/Login.vue';
+import {mapGetters} from 'vuex'
 
 export default {
-    components: {
-        // Login,
-    },
-
     data: function () {
         return {
-            show_login: false
+            show_login: false,
         }
     },
 
-    computed : {
-        login_state() {
-            // return true;
-            return this.$store.getters.login_state ? true :false;
-        }
-    },
+    // vuex 中的数据实时更新，使用watch
+    computed: mapGetters (['login_state']),
+
+    // watch: {
+    //     login_state(val) {
+    //         console.log('val')
+    //         console.log(val)
+    //         this.login = val;
+    //     }
+    // },
 
     methods: {
         logout() {
@@ -81,7 +81,6 @@ export default {
                         type: 'success',
                         center: true,
                 });
-                console.log('qqqqq')
                 this.$router.push({path: '/'});
             }).catch((err) => {
                 this.$message({

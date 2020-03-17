@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import store from '../store/index'
 
 import Test from '../components/Test.vue'
 import Test2 from '../components/Test2.vue'
@@ -27,13 +28,36 @@ const routes = [
     { path: '/test2', name: 'test2', component: Test2},
     { path: '/login', name: 'login', component: Login},
     { path: '/register', name: 'register', component: Register},
-    { path: '/edit', name: 'edit', component: Edit},
-]
+    { path: '/edit', name: 'edit', component: Edit, meta: {requireAuth: true}},
+];
 
 const router = new Router({
     mode: 'history',
     routes,
-})
+});
+
+if (window.localStorage.getItem('jwt')) {
+    store.commit('token', window.localStorage.getItem('jwt'));
+    store.commit('login_state', true);
+}
+if (window.localStorage.getItem('userInfo')) {
+    store.commit('user_id', JSON.parse(window.localStorage.getItem("userInfo")).id);
+}
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(r => r.meta.requireAuth)) {
+        if (store.state.token) {
+            next();
+        } else {
+            next({
+                path: '/',
+                query: {redirect: to.fullPath}
+            });
+        }
+    } else {
+        next();
+    }
+});
 
 
 export default router
